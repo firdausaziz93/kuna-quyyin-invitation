@@ -21,7 +21,7 @@ function RSVP() {
     
     const message = encodeURIComponent(
       `Assalamualaikum,\n\n` +
-      `Saya ${formData.nama} ingin memaklumkan bahawa saya *${statusText}*${bilanganText} ke Majlis Perkahwinan Fatin & Azrien pada 15 Januari 2027.\n\n` +
+      `Saya ${formData.nama} ingin memaklumkan bahawa saya *${statusText}*${bilanganText} ke Majlis Perkahwinan Fatin & Azrien pada 06 Jun 2026.\n\n` +
       `Terima kasih.`
     )
     

@@ -103,7 +103,7 @@ function Passcode({ onUnlock }) {
               <div className="decorative-line my-8" />
 
               <p className="font-dm text-sm text-gray-500 tracking-wide">
-                15 Januari 2027
+                06 Jun 2026
               </p>
               <p className="font-dm text-xs text-gray-400 mt-2">
                 Anda dijemput ke majlis kami

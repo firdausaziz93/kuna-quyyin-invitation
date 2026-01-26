@@ -98,7 +98,7 @@ function App() {
                 </div>
               </div>
             }>
-              <Gallery />
+              {/* <Gallery /> */}
             </Suspense>
             <RSVP />
             <Share />
@@ -121,7 +121,7 @@ function App() {
                 transition={{ delay: 0.1 }}
                 className="font-dm text-xs text-gray-400 mt-2 tracking-elegant uppercase"
               >
-                15 Januari 2027
+                06 Jun 2026
               </motion.p>
             </footer>
           </motion.main>
