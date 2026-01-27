@@ -1,21 +1,46 @@
-import { useState, useEffect, Suspense, lazy } from 'react'
+import { useState, useEffect, useRef, Suspense, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Passcode from './components/Passcode'
-import Loading from './components/Loading'
+import GateOpen from './components/GateOpen'
 import Hero from './components/Hero'
 import Details from './components/Details'
 import RSVP from './components/RSVP'
 import Music from './components/Music'
 import Share from './components/Share'
 import floralBg from './img/floral-blue.png'
+import weddingSong from './sound/SABHI SADDI feat. Marsha - Cinta Sesungguhnya.mp3'
 
 const Gallery = lazy(() => import('./components/Gallery'))
 
 function App() {
   const [isLocked, setIsLocked] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showGate, setShowGate] = useState(false)
   const [autoPlayMusic, setAutoPlayMusic] = useState(false)
   const [particles, setParticles] = useState([])
+  const audioRef = useRef(null)
+
+  useEffect(() => {
+    // Initialize audio instance at App level to allow unlocking before Music component mounts
+    audioRef.current = new Audio(weddingSong)
+    audioRef.current.loop = true
+    audioRef.current.volume = 0.3
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
+    }
+  }, [])
+
+  const unlockAudio = () => {
+    if (audioRef.current) {
+      // Setup silent play to unlock audio context on iOS/Safari
+      audioRef.current.play().then(() => {
+        audioRef.current.pause() 
+      }).catch(err => console.log("Audio unlock interaction failed", err))
+    }
+  }
 
   useEffect(() => {
     const generated = Array.from({ length: 60 }, (_, i) => ({
@@ -30,13 +55,10 @@ function App() {
 
   const handleUnlock = (shouldPlayMusic = false) => {
     setIsLocked(false)
-    setIsLoading(true)
+    setShowGate(true)
     if (shouldPlayMusic) {
       setAutoPlayMusic(true)
     }
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2500)
   }
 
   return (
@@ -78,11 +100,13 @@ function App() {
 
       <AnimatePresence mode="wait">
         {isLocked ? (
-          <Passcode key="passcode" onUnlock={handleUnlock} />
-        ) : isLoading ? (
-          <Loading key="loading" />
+          <Passcode key="passcode" onUnlock={handleUnlock} onStartInteraction={unlockAudio} />
         ) : (
-          <motion.main
+          <motion.div key="main-content" className="relative">
+            <AnimatePresence>
+              {showGate && <GateOpen key="gate" onAnimationComplete={() => setShowGate(false)} />}
+            </AnimatePresence>
+            <motion.main
             key="main"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -102,7 +126,7 @@ function App() {
             </Suspense>
             <RSVP />
             <Share />
-            <Music autoPlay={autoPlayMusic} />
+            <Music autoPlay={autoPlayMusic} sharedAudioRef={audioRef} />
             
             <footer className="py-16 text-center">
               <div className="decorative-line max-w-xs mx-auto mb-8" />
@@ -125,6 +149,7 @@ function App() {
               </motion.p>
             </footer>
           </motion.main>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

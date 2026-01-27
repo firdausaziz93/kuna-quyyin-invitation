@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import floralBg from '../img/floral-blue.png'
 
-function Passcode({ onUnlock }) {
+function Passcode({ onUnlock, onStartInteraction }) {
   const [isScanning, setIsScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
   const [isVerified, setIsVerified] = useState(false)
@@ -10,6 +10,9 @@ function Passcode({ onUnlock }) {
   const handleFingerprint = () => {
     if (isScanning || isVerified) return
     
+    // Trigger audio unlock immediately on user interaction
+    if (onStartInteraction) onStartInteraction()
+
     setIsScanning(true)
     setScanProgress(0)
     

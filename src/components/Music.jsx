@@ -2,24 +2,27 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import weddingSong from '../sound/SABHI SADDI feat. Marsha - Cinta Sesungguhnya.mp3'
 
-function Music({ autoPlay = false }) {
+function Music({ autoPlay = false, sharedAudioRef = null }) {
   const [isPlaying, setIsPlaying] = useState(false)
-  const audioRef = useRef(null)
+  const internalAudioRef = useRef(null)
+  const audioRef = sharedAudioRef || internalAudioRef
   const hasAutoPlayed = useRef(false)
 
   useEffect(() => {
-    audioRef.current = new Audio(weddingSong)
-    audioRef.current.loop = true
-    audioRef.current.volume = 0.3
+    if (!sharedAudioRef) {
+      audioRef.current = new Audio(weddingSong)
+      audioRef.current.loop = true
+      audioRef.current.volume = 0.3
+    }
 
     return () => {
-      if (audioRef.current) {
+      if (!sharedAudioRef && audioRef.current) {
         audioRef.current.pause()
         audioRef.current.src = ''
         audioRef.current = null
       }
     }
-  }, [])
+  }, [sharedAudioRef])
 
   useEffect(() => {
     if (autoPlay && audioRef.current && !hasAutoPlayed.current) {
