@@ -29,11 +29,28 @@ function Music({ autoPlay = false, sharedAudioRef = null }) {
       hasAutoPlayed.current = true
       setTimeout(() => {
         audioRef.current.play()
-          .then(() => setIsPlaying(true))
+          .then(() => setIsPlaying(true)) // This will be handled by event listener but kept for promise success feedback
           .catch((err) => console.log('Auto-play prevented:', err))
       }, 800)
     }
   }, [autoPlay])
+
+  // Sync state with actual audio events (pausing from outside, e.g. visibility change)
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const onPlay = () => setIsPlaying(true)
+    const onPause = () => setIsPlaying(false)
+
+    audio.addEventListener('play', onPlay)
+    audio.addEventListener('pause', onPause)
+
+    return () => {
+      audio.removeEventListener('play', onPlay)
+      audio.removeEventListener('pause', onPause)
+    }
+  }, [audioRef])
 
   const togglePlay = () => {
     if (audioRef.current) {

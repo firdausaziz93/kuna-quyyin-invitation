@@ -16,6 +16,7 @@ function App() {
   const [isLocked, setIsLocked] = useState(true)
   const [showGate, setShowGate] = useState(false)
   const [autoPlayMusic, setAutoPlayMusic] = useState(false)
+  const [pendingMusic, setPendingMusic] = useState(false)
   const [particles, setParticles] = useState([])
   const audioRef = useRef(null)
 
@@ -25,7 +26,17 @@ function App() {
     audioRef.current.loop = true
     audioRef.current.volume = 0.3
 
+    // Handle visibility change to stop music when tab is hidden/closed
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current) {
+        audioRef.current.pause()
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current = null
@@ -57,7 +68,7 @@ function App() {
     setIsLocked(false)
     setShowGate(true)
     if (shouldPlayMusic) {
-      setAutoPlayMusic(true)
+      setPendingMusic(true)
     }
   }
 
@@ -104,7 +115,13 @@ function App() {
         ) : (
           <motion.div key="main-content" className="relative">
             <AnimatePresence>
-              {showGate && <GateOpen key="gate" onAnimationComplete={() => setShowGate(false)} />}
+              {showGate && <GateOpen key="gate" onAnimationComplete={() => {
+                setShowGate(false)
+                if (pendingMusic) {
+                  setAutoPlayMusic(true)
+                  setPendingMusic(false)
+                }
+              }} />}
             </AnimatePresence>
             <motion.main
             key="main"
