@@ -4,6 +4,7 @@ import Passcode from './components/Passcode'
 import GateOpen from './components/GateOpen'
 import Hero from './components/Hero'
 import Details from './components/Details'
+import Doa from './components/Doa'
 import RSVP from './components/RSVP'
 import Music from './components/Music'
 import Share from './components/Share'
@@ -132,16 +133,9 @@ function App() {
           >
             <Hero />
             <Details />
-            <Suspense fallback={
-              <div className="min-h-[50vh] flex items-center justify-center">
-                <div className="glass-card p-8">
-                  <div className="w-6 h-6 border border-white/20 border-t-white/60 animate-spin" style={{ borderRadius: '50%' }} />
-                </div>
-              </div>
-            }>
-              {/* <Gallery /> */}
-            </Suspense>
-            <RSVP />
+            <Doa />
+            
+            {/* <RSVP /> */}
             <Share />
             <Music autoPlay={autoPlayMusic} sharedAudioRef={audioRef} />
             

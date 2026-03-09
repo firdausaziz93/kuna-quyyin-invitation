@@ -278,7 +278,7 @@ function Hero() {
                 <div className="absolute inset-0 rounded-full border border-gray-200" />
               </motion.div>
               <h2 className="font-playfair text-2xl md:text-3xl text-gray-800 mb-1">
-                Fatin
+                Fatin Yushana
               </h2>
               <p className="font-dm text-xs text-gray-500">Binti Mohd Yusri</p>
             </motion.div>
@@ -307,10 +307,10 @@ function Hero() {
                 <div className="absolute inset-0 rounded-full border border-gray-200" />
               </motion.div>
               <h2 className="font-playfair text-2xl md:text-3xl text-gray-800 mb-1">
-                Azrien
+                Tengku Ahmad Azrien
               </h2>
               <p className="font-dm text-xs text-gray-500">
-                Bin (akan dikemaskini)
+                Bin Tengku A. Bakar
               </p>
             </motion.div>
           </div>

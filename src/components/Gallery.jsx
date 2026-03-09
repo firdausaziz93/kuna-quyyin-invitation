@@ -32,7 +32,7 @@ function Gallery() {
   }
 
   return (
-    <section className="py-24 px-4">
+    <section className="py-4 px-4">
       <motion.div
         variants={containerVariants}
         initial="hidden"

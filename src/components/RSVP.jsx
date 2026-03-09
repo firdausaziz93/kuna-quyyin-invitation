@@ -1,5 +1,24 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+// Simple Obfuscation/Encryption Helpers
+const encrypt = (text, key) => {
+  if (!key) return text
+  const result = text.split('').map((c, i) => 
+    String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+  ).join('')
+  return btoa(result)
+}
+
+const decrypt = (encoded, key) => {
+  if (!key) return encoded
+  try {
+    const text = atob(encoded)
+    return text.split('').map((c, i) => 
+      String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+    ).join('')
+  } catch (e) { console.error("Decryption failed", e); return encoded }
+}
 
 function RSVP() {
   const [formData, setFormData] = useState({
@@ -9,8 +28,27 @@ function RSVP() {
   })
   const [status, setStatus] = useState('idle') // idle, submitting, success, error
 
-  // REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4rAuTXCP8l6V6EynPDl2gY90FdNtNgOxBFOz_5EMQHn7boaCzDkR1yyk5Kqb6CfNCSQ/exec"
+  // --- SECURITY CONFIGURATION ---
+  // 1. Change this to your own secret key
+  const SECRET_KEY = "daushensem"
+  
+  // 2. Run the app, check Console (F12), copy the generated encrypted string, and paste it here:
+  const ENCRYPTED_URL = "DBUBAxtfQVwWDhYIBQdGAgEcAgEBTxYcBUoDEgYfCxJaAEckJRUcDgYWQQEpEDorJj1cDUMlXiAXHTUpCFMSKlFVKBcrGSoGOgsqIyEJOlghLCQ7BlIMHAQuHiUeIVkcFxhQJhUDQzAOKy0gNEIBGRAQ" 
+
+  // const RAW_URL = "https://script.google.com/macros/s/AKfycbw4rAuTXCP8l6V6EynPDl2gY90FdNtNgOxBFOz_5EMQHn7boaCzDkR1yyk5Kqb6CfNCSQ/exec"
+  
+  // Uses encrypted URL if available, otherwise falls back to raw (auto-decrypts)
+  const GOOGLE_SCRIPT_URL = ENCRYPTED_URL ? decrypt(ENCRYPTED_URL, SECRET_KEY) : RAW_URL
+
+  // useEffect(() => {
+  //   // Dev helper to generate the encrypted connection string
+  //   if (!ENCRYPTED_URL) {
+  //     console.log("%c --- ENCRYPTION GENERATOR ---", "color: #bada55; font-weight: bold;")
+  //     console.log("Current Key:", SECRET_KEY)
+  //     console.log("Encrypted URL:", encrypt(RAW_URL, SECRET_KEY))
+  //     console.log("%c ---------------------------", "color: #bada55; font-weight: bold;")
+  //   }
+  // }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -68,7 +106,7 @@ function RSVP() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 py-24">
+    <section className="min-h-screen flex items-center justify-center px-4 py-4">
       <motion.div
         variants={containerVariants}
         initial="hidden"
