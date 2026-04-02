@@ -64,7 +64,7 @@ function Details() {
     },
     {
       label: "Lokasi",
-      value: "Arena YAM Tengku Muda Pahang",
+      value: "Dewan Jubli Perak Sultan Haji Ahmad Shah",
       sub: "Maran, Pahang",
       icon: (
         <svg
@@ -334,7 +334,8 @@ function Details() {
 
           <div className="aspect-video w-full relative overflow-hidden rounded-xl border border-blue-100">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.02518538348!2d102.77737227497309!3d3.5816890963924717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ced5dd2d672d2b%3A0xa6522cd1b74a812a!2sArena%20YAM%20Tengku%20Muda%20Pahang!5e0!3m2!1sen!2smy!4v1773073319617!5m2!1sen!2smy"
+              // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.02518538348!2d102.77737227497309!3d3.5816890963924717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ced5dd2d672d2b%3A0xa6522cd1b74a812a!2sArena%20YAM%20Tengku%20Muda%20Pahang!5e0!3m2!1sen!2smy!4v1773073319617!5m2!1sen!2smy"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.0218940826257!2d102.77685927497313!3d3.5824455963917123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ced5c326cd2cb9%3A0xb360a310a1d94ce9!2sDewan%20Jubli%20Perak%20Sultan%20Haji%20Ahmad%20Shah%20Maran!5e0!3m2!1sen!2smy!4v1775096025935!5m2!1sen!2smy"
               width="100%"
               height="100%"
               style={{
@@ -353,7 +354,7 @@ function Details() {
         {/* Google Maps Button */}
         <motion.div variants={itemVariants} className="text-center mb-12">
           <motion.a
-            href="https://maps.app.goo.gl/gaRP3RRCACf5GbSa8"
+            href="https://maps.app.goo.gl/3KxfNmsTci3NRAXP9"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 font-dm text-sm bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300"
